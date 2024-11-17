@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Task Detail{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Room {{ task.room_number }} - {{ task.service_type }}</h2>
+    <p>{{ task.notes }}</p>
+    {% if task.status != 'completed' and current_user.role == 'housekeeper' %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="photo">Upload Completion Photo</label>
+            <input type="file" name="photo" class="form-control-file" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Mark as Completed</button>
+    </form>
+    {% elif task.status == 'completed' %}
+    <p>Status: <strong>{{ task.status }}</strong></p>
+    {% endif %}
+    {% if task.photos %}
+    <h3>Uploaded Photos</h3>
+    {% for photo in task.photos %}
+        <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}" alt="Photo" style="max-width: 200px;">
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

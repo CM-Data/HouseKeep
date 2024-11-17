@@ -1,0 +1,14 @@
+<!-- templates/confirm_delete_completed_tasks.html -->
+
+{% extends 'base.html' %}
+{% block title %}Confirm Delete Completed Tasks{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-danger">Confirm Delete Completed Rooms</h2>
+    <p>Are you sure you want to delete all tasks for completed rooms? This action cannot be undone.</p>
+    <form method="post" action="{{ url_for('confirm_delete_completed_tasks') }}">
+        <button type="submit" class="btn btn-danger">Delete All Completed Tasks</button>
+        <a href="{{ url_for('manager_dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

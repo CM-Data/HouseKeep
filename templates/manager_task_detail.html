@@ -1,0 +1,69 @@
+<!-- templates/manager_task_detail.html -->
+
+{% extends 'base.html' %}
+{% block title %}Task Details{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Task Details for Room {{ task.room_number }}</h2>
+
+    <form method="post" action="{{ url_for('manager_task_detail', task_id=task.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.room_number.label }} {{ form.room_number(class="form-control") }}
+            {% for error in form.room_number.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.service_type.label }} {{ form.service_type(class="form-control") }}
+            {% for error in form.service_type.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.priority.label }} {{ form.priority(class="form-control") }}
+            {% for error in form.priority.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.notes.label }} {{ form.notes(class="form-control", rows="4") }}
+            {% for error in form.notes.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.assigned_to.label }} {{ form.assigned_to(class="form-control") }}
+            {% for error in form.assigned_to.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            <small class="form-text text-muted">Leave blank to assign later.</small>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <input type="text" class="form-control" value="{{ task.status.title() }}" readonly>
+        </div>
+        {% if task.status != 'completed' %}
+        <button type="submit" name="complete_task" value="true" class="btn btn-success">Mark as Completed</button>
+        {% endif %}
+
+        {% if task.photos %}
+        <div class="form-group">
+            <label>Uploaded Photos</label><br>
+            {% for photo in task.photos %}
+                <img src="{{ url_for('static', filename='uploads/' + photo.filename) }}" alt="Photo" style="max-width: 200px; margin: 5px;">
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{{ url_for('manager_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+<!-- templates/create_task.html -->
+
+{% extends 'base.html' %}
+{% block title %}Create New Task{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Create New Task</h2>
+    <form method="post" action="{{ url_for('create_task') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.room_number.label }} {{ form.room_number(class="form-control") }}
+            {% for error in form.room_number.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.service_type.label }} {{ form.service_type(class="form-control") }}
+            {% for error in form.service_type.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.priority.label }} {{ form.priority(class="form-control") }}
+            {% for error in form.priority.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.notes.label }} {{ form.notes(class="form-control", rows="4") }}
+            {% for error in form.notes.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.assigned_to.label }} {{ form.assigned_to(class="form-control") }}
+            {% for error in form.assigned_to.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+            <small class="form-text text-muted">Leave blank to assign later.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+        <a href="{{ url_for('manager_dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!-- templates/view_logs.html -->
+
+{% extends 'base.html' %}
+{% block title %}Deleted Tasks Logs{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Deleted Tasks Logs</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Task ID</th>
+                <th>Room Number</th>
+                <th>Service Type</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Completed At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.task_id }}</td>
+                <td>{{ log.room_number }}</td>
+                <td>{{ log.service_type.replace('_', ' ').title() }}</td>
+                <td>{{ log.priority }}</td>
+                <td>{{ log.status.title() }}</td>
+                <td>{{ log.assigned_user.name if log.assigned_user else 'Unassigned' }}</td>
+                <td>{{ log.completed_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

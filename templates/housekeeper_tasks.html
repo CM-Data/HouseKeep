@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}My Tasks{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>My Tasks</h2><script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on('connect', function() {
+        console.log('Connected to server');
+    });
+    socket.on('new_task', function(data) {
+        alert('New task assigned: Room ' + data.room_number);
+        // Optionally, you can refresh the task list here
+    });
+</script>
+    <ul class="list-group">
+        {% for task in tasks %}
+        <li class="list-group-item">
+            <a href="{{ url_for('task_detail', task_id=task.id) }}">Room {{ task.room_number }} - {{ task.service_type }}</a>
+            <span class="badge badge-primary">{{ task.status }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
